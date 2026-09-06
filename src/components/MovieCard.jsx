@@ -1,16 +1,16 @@
-export default function MovieCard({ setActiveMovie }) {
+export default function MovieCard({ setActiveMovie, movieData }) {
   return (
     <div
-      className="movie-card flex flex-col justify-center items-center m-2 mt-3 p-5 pb-3 bg-slate-800 rounded-2xl"
-      onClick={() => setActiveMovie(true)}
+      className="movie-card flex flex-col justify-center items-center m-2 mt-3 p-5 pb-3 bg-slate-800 rounded-2xl w-56"
+      onClick={() => setActiveMovie(movieData)}
     >
       <img
-        src="https://cdn.mos.cms.futurecdn.net/xFQ8L37EP3ARaoFg8cQYCD-768-80.jpg.webp"
-        alt="interstellar"
-        className="w-full h-70 rounded-2xl"
+        src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
+        alt={`${movieData.original_title}`}
+        className="w-full h-72 object-cover rounded-2xl"
       />
-      <h2 className="text-2xl mt-2">Interstellar</h2>
-      <div>2014</div>
+      <div className="text-lg text-center mt-2 w-full truncate wrap-break-word">{movieData.original_title}</div>
+      <div>{movieData.release_date}</div>
     </div>
   );
 }

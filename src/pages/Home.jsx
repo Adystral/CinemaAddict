@@ -5,17 +5,19 @@ import InputItem from "../components/InputItem";
 import MoviePreview from "../components/MoviePreview";
 MoviePreview;
 
-export default function Home() {
+export default function Home({ movieList, API_BASE_URL }) {
   const [activeMovie, setActiveMovie] = useState(null);
 
   return (
     <>
-      {activeMovie && (
+      {activeMovie &&
+      
         <MoviePreview
           activeMovie={activeMovie}
           setActiveMovie={setActiveMovie}
+          movieData={activeMovie}
         />
-      )}
+      }
 
       <div className="flex flex-col justify-start items-center min-h-screen bg-slate-900 font-mono text-slate-300">
         <Link to="/">
@@ -31,15 +33,20 @@ export default function Home() {
             btnClassName="search-btn"
           />
         </div>
-        
-        <h1 className="p-4 mx-5">All Movies</h1>
+
+        <h1 className="p-4 mx-5">Popular Movies</h1>
         <div className="movie-container flex flex-col flex-wrap p-2">
-          
           <div className="flex flex-row flex-wrap justify-center">
-            <MovieCard
-              activeMovie={activeMovie}
-              setActiveMovie={setActiveMovie}
-            />
+            {movieList.map((movie) => {
+              return (
+                <MovieCard
+                  setActiveMovie={setActiveMovie}
+                  key={movie.id}
+                  movieData={movie}
+                  API_BASE_URL={API_BASE_URL}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
