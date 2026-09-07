@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import dateConverter from "../utils/dateConverter";
 import hourConverter from "../utils/hourConverter";
+import { API_OPTIONS } from "../services/API_VARIABLES";
 
-export default function MovieDetails({ API_OPTIONS }) {
+
+export default function MovieDetails() {
   const { id } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
 
@@ -26,6 +28,7 @@ export default function MovieDetails({ API_OPTIONS }) {
     console.log(movieDetails);
   }, [id]);
 
+  // Loading screen
   if (!movieDetails) {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen bg-slate-900 bg-linear-to-t from-slate-950 to-slate-900 font-mono">
@@ -39,9 +42,6 @@ export default function MovieDetails({ API_OPTIONS }) {
       </div>
     );
   }
-
-  // TODO: Add your useState variables here (e.g., movieDetails, cast)
-  // TODO: Add your useEffect to fetch data using the 'id'
 
   return (
     <div className="relative min-h-screen bg-slate-900 text-slate-200 font-mono pb-12">
@@ -125,7 +125,9 @@ export default function MovieDetails({ API_OPTIONS }) {
 
             <div className="mb-8">
               <h2 className="text-xl font-semibold mb-1">Director</h2>
-              <p className="text-slate-400">Director Name Placeholder</p>
+              <p className="text-slate-400">
+                {movieDetails.credits.crew.find(c => c.job === "Director").name}
+              </p>
             </div>
 
             {/* Action Buttons */}

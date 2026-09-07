@@ -3,18 +3,8 @@ import { useState, useEffect } from "react";
 import "./index.css";
 import Home from "./pages/Home";
 import MovieDetails from "./pages/MovieDetails";
+import {API_BASE_URL, API_OPTIONS} from "./services/API_VARIABLES";
 
-const API_BASE_URL = "https://api.themoviedb.org/3";
-
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-
-const API_OPTIONS = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${API_KEY}`,
-  },
-};
 
 function App() {
   const [movieList, setMovieList] = useState([]);
@@ -48,7 +38,7 @@ function App() {
 
         <Route 
           path="/movie/:id" 
-          element={<MovieDetails API_OPTIONS={API_OPTIONS} />} 
+          element={<MovieDetails />} 
         />
       </Routes>
     </BrowserRouter>
