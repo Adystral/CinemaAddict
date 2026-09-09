@@ -26,7 +26,7 @@ export default function Home({ movies, loading }) {
         <header className="w-full py-6 flex flex-col items-center border-b border-slate-800/50 bg-slate-900/50 backdrop-blur-md mb-8 z-50 sticky top-0">
           <Link to="/">
             <h1 className="text-4xl font-bold tracking-widest text-transparent bg-clip-text bg-linear-to-r from-slate-200 to-slate-500">
-              CINEMADDICT
+              CinemaAddict
             </h1>
           </Link>
         </header>
