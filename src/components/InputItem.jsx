@@ -9,6 +9,7 @@ export default function InputItem({
   btnClassName = "",
   searchQuery,
   setSearchQuery,
+  onFocus,
 }) {
   const navigate = useNavigate();
 
@@ -30,6 +31,7 @@ export default function InputItem({
         placeholder={placeholder}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
+        onFocus={onFocus} 
         className={`${inputClassName} cinematic-input min-w-0`}
       />
 
@@ -37,7 +39,6 @@ export default function InputItem({
         <Button
           children={btnChildren}
           className={`${btnClassName} bg-[#1e293b]/50 border border-slate-700 text-slate-200 rounded-lg px-4 py-2 focus:outline-none focus:border-slate-400 font-mono text-base transition-colors duration-200 cursor-pointer`}
-
           type="submit" 
         />
       </div>

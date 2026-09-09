@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { API_BASE_URL, API_OPTIONS } from "../services/API_VARIABLES";
 import { Link } from "react-router-dom";
 import InputItem from "./InputItem";
@@ -6,6 +6,25 @@ import InputItem from "./InputItem";
 export default function Search() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  
+  
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const searchContainerRef = useRef(null);
+
+ 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
+        setIsDropdownVisible(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
@@ -13,29 +32,23 @@ export default function Search() {
         setSearchResults([]);
         return;
       }
-
       fetchSearchResults();
     }, 800);
 
     async function fetchSearchResults() {
       try {
         const endpoint = `${API_BASE_URL}/search/movie?query=${searchQuery}`;
-
         const response = await fetch(endpoint, API_OPTIONS);
         const data = await response.json();
 
-        const sortedMovies = data.results.sort(
-          (a, b) => b.popularity - a.popularity,
-        );
+        const sortedMovies = data.results.sort((a, b) => b.popularity - a.popularity);
         setSearchResults(sortedMovies);
       } catch (error) {
         console.error("Error fetching search page results:  ", error);
       }
     }
 
-    return () => {
-      clearTimeout(debounceTimer);
-    };
+    return () => clearTimeout(debounceTimer);
   }, [searchQuery]);
 
   return (
@@ -45,8 +58,7 @@ export default function Search() {
           Explore Movies
         </label>
 
-
-        <div className="relative w-full md:w-lg">
+        <div className="relative w-full md:w-lg" ref={searchContainerRef}>
           <InputItem
             type="text"
             placeholder="Search movies (e.g. Batman)..."
@@ -55,14 +67,17 @@ export default function Search() {
             btnClassName="hover:bg-slate-700 transition"
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
+            onFocus={() => setIsDropdownVisible(true)} 
           />
 
-          {searchQuery && searchResults.length > 0 && (
+          {isDropdownVisible && searchQuery && searchResults.length > 0 && (
             <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800/90 backdrop-blur-xl border border-slate-700/50 rounded-b-2xl shadow-2xl overflow-hidden z-50 flex flex-col text-left">
               {searchResults.slice(0, 5).map((movie) => (
                 <Link
                   to={`/movie/${movie.id}`}
                   key={movie.id}
+
+                  onClick={() => setIsDropdownVisible(false)}
                   className="flex items-center gap-4 p-3 hover:bg-slate-700/60 transition-colors border-b border-slate-700/50 last:border-none"
                 >
                   {/* Mini Poster */}
@@ -84,9 +99,7 @@ export default function Search() {
                       {movie.title}
                     </span>
                     <span className="text-slate-400 text-xs mt-1">
-                      {movie.release_date
-                        ? movie.release_date.substring(0, 4)
-                        : "Unknown"}
+                      {movie.release_date ? movie.release_date.substring(0, 4) : "Unknown"}
                     </span>
                   </div>
                 </Link>
@@ -95,6 +108,7 @@ export default function Search() {
               {/* See all results */}
               <Link
                 to={`/search?q=${searchQuery}`}
+                onClick={() => setIsDropdownVisible(false)}
                 className="p-3 text-center text-sm text-slate-400 hover:text-white hover:bg-slate-700/60 transition-colors bg-slate-900/50"
               >
                 See all results for "{searchQuery}" &rarr;
