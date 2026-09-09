@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import dateConverter from "../utils/dateConverter";
 import hourConverter from "../utils/hourConverter";
-import { API_OPTIONS } from "../services/API_VARIABLES";
+import { API_BASE_URL ,API_OPTIONS } from "../services/API_VARIABLES";
 
 
 export default function MovieDetails() {
@@ -12,7 +12,7 @@ export default function MovieDetails() {
   useEffect(() => {
     async function getMovieDetails() {
       try {
-        const endpoint = `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits,videos`;
+        const endpoint = `${API_BASE_URL}/movie/${id}?append_to_response=credits,videos`;
 
         const response = await fetch(endpoint, API_OPTIONS);
         const data = await response.json();
@@ -20,7 +20,7 @@ export default function MovieDetails() {
         setMovieDetails(data);
         console.log(data);
       } catch (error) {
-        console.error("Error: ", error);
+        console.error("Error fetching search page results:  ", error);
       }
     }
 

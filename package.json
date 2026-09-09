@@ -15,7 +15,8 @@
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.3",
     "tailwind-merge": "^3.6.0",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "tw-merge": "^0.0.1-alpha.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

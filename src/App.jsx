@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./index.css";
+import {API_BASE_URL, API_OPTIONS} from "./services/API_VARIABLES";
 import Home from "./pages/Home";
 import MovieDetails from "./pages/MovieDetails";
-import {API_BASE_URL, API_OPTIONS} from "./services/API_VARIABLES";
-
+import MovieSearch from "./pages/MovieSearch";
 
 function App() {
   const [movieList, setMovieList] = useState([]);
@@ -39,6 +39,11 @@ function App() {
         <Route 
           path="/movie/:id" 
           element={<MovieDetails />} 
+        />
+
+        <Route 
+          path="/search"
+          element={<MovieSearch />}
         />
       </Routes>
     </BrowserRouter>

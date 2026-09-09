@@ -1,5 +1,5 @@
-import { useState } from "react";
-import Button from './Button';
+import { useNavigate } from "react-router-dom";
+import Button from "./Button";
 
 export default function InputItem({
   type = "",
@@ -7,28 +7,40 @@ export default function InputItem({
   inputClassName = "",
   btnChildren = "",
   btnClassName = "",
+  searchQuery,
+  setSearchQuery,
 }) {
-  const [inputText, setInputText] = useState("");
-  
-  function handleChange(e) {
-    setInputText(e.target.value);
-    console.log(inputText);
-  }
+  const navigate = useNavigate();
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault(); 
+
+    if (searchQuery && searchQuery.trim() !== "") {
+      navigate(`/search?q=${searchQuery}`);
+    }
+  };
 
   return (
-    <div>
+    <form 
+      onSubmit={handleSearchSubmit} 
+      className="flex flex-row items-center w-full justify-center"
+    >
       <input
         type={type}
         placeholder={placeholder}
-        className={`${inputClassName} bg-[#1e293b]/50 border border-slate-700 text-slate-200 placeholder-slate-500 rounded px-3 py-1.5 mx-2 focus:outline-none focus:border-slate-400 font-mono text-base transition-colors duration-200`}
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className={`${inputClassName} cinematic-input min-w-0`}
       />
 
-      <Button
-        children={btnChildren}
-        className={`${btnClassName} bg-[#1e293b]/50 border border-slate-700 text-slate-200 placeholder-slate-500 rounded px-3 py-1.5 mx-2 focus:outline-none focus:border-slate-400 font-mono text-base transition-colors duration-200`}
-        onClick={handleChange}
-      />
-    </div>
+      <div className="hidden sm:block ml-2">
+        <Button
+          children={btnChildren}
+          className={`${btnClassName} bg-[#1e293b]/50 border border-slate-700 text-slate-200 rounded-lg px-4 py-2 focus:outline-none focus:border-slate-400 font-mono text-base transition-colors duration-200 cursor-pointer`}
+
+          type="submit" 
+        />
+      </div>
+    </form>
   );
 }
