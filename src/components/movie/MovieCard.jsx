@@ -1,3 +1,5 @@
+import dateConverter from "../../utils/dateConverter";
+
 export default function MovieCard({ setActiveMovie, movieData }) {
   return (
     <div
@@ -10,7 +12,7 @@ export default function MovieCard({ setActiveMovie, movieData }) {
         className="w-full h-72 object-cover rounded-2xl"
       />
       <div className="text-lg text-center mt-2 w-full truncate wrap-break-word">{movieData.title}</div>
-      <div>{movieData.release_date}</div>
+      <div>{dateConverter(movieData.release_date).year}</div>
     </div>
   );
 }

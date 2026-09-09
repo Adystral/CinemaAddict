@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import MovieCard from "../components/MovieCard";
-import MoviePreview from "../components/MoviePreview";
+import MovieCard from "../components/movie/MovieCard";
+import MoviePreview from "../components/movie/MoviePreview";
 import Search from "../components/Search";
 import { API_BASE_URL, API_OPTIONS } from "../services/API_VARIABLES";
 
