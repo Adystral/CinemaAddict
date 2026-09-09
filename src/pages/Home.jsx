@@ -6,18 +6,18 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import MovieRow from "../components/movie/MovieRow";
 
 export default function Home({ movies, loading }) {
-  const [activemovies, setActiveMovies] = useState(null);
+  const [activeMovies, setActiveMovies] = useState(null);
 
   if (loading) {
     return <LoadingSpinner />;
   }
   return (
     <>
-      {activemovies && (
+      {activeMovies && (
         <MoviePreview
-          activemovies={activemovies}
-          setActiveMovies={setActiveMovies}
-          moviesData={activemovies}
+          activeMovies={activeMovies}
+          setActiveMovie={setActiveMovies}
+          movieData={activeMovies}
         />
       )}
 
@@ -37,37 +37,37 @@ export default function Home({ movies, loading }) {
         <MovieRow
           rowTitle="Trending Now!"
           movies={movies.trending}
-          setActiveMovies={setActiveMovies}
+          setActiveMovie={setActiveMovies}
         />
 
         <MovieRow
           rowTitle="Highest Rated"
           movies={movies.highestRated}
-          setActiveMovies={setActiveMovies}
+          setActiveMovie={setActiveMovies}
         />
 
         <MovieRow
           rowTitle="Upcoming Movies"
           movies={movies.upcoming}
-          setActiveMovies={setActiveMovies}
+          setActiveMovie={setActiveMovies}
         />
 
         <MovieRow
           rowTitle="In Theatres"
           movies={movies.nowPlaying}
-          setActiveMovies={setActiveMovies}
+          setActiveMovie={setActiveMovies}
         />
 
         <MovieRow
           rowTitle="Best of Action"
           movies={movies.action}
-          setActiveMovies={setActiveMovies}
+          setActiveMovie={setActiveMovies}
         />
 
         <MovieRow
           rowTitle="Best of Comedy"
           movies={movies.comedy}
-          setActiveMovies={setActiveMovies}
+          setActiveMovie={setActiveMovies}
         />
       </div>
     </>
