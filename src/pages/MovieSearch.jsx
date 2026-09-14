@@ -29,7 +29,7 @@ export default function MovieSearch() {
         });
 
         setSearchResults(sortedMovies);
-        console.log(data);
+      
       } catch (error) {
         console.error("Error fetching search page results: ", error);
       }
@@ -38,7 +38,7 @@ export default function MovieSearch() {
     fetchSearchResults();
   }, [user_query]);
 
-  console.log("bruh", searchResults);
+  
 
   return (
     <>

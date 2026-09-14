@@ -37,7 +37,7 @@ export default function Search() {
 
     async function fetchSearchResults() {
       try {
-        const endpoint = `${API_BASE_URL}/search/movie?query=${searchQuery}`;
+        const endpoint = `${API_BASE_URL}/search/movie?query=${encodeURIComponent(searchQuery)}`;
         const response = await fetch(endpoint, API_OPTIONS);
         const data = await response.json();
 
@@ -107,7 +107,7 @@ export default function Search() {
 
               {/* See all results */}
               <Link
-                to={`/search?q=${searchQuery}`}
+                to={`/search?q=${encodeURIComponent(searchQuery)}`}
                 onClick={() => setIsDropdownVisible(false)}
                 className="p-3 text-center text-sm text-slate-400 hover:text-white hover:bg-slate-700/60 transition-colors bg-slate-900/50"
               >

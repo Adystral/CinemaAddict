@@ -1,16 +1,112 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import MoviePreview from "../components/movie/MoviePreview"; 
+import MoviePreview from "../components/movie/MoviePreview";
 import Search from "../components/Search";
 import LoadingSpinner from "../components/LoadingSpinner";
 import MovieRow from "../components/movie/MovieRow";
+import { API_BASE_URL, API_OPTIONS } from "../services/API_VARIABLES";
 
-export default function Home({ movies, loading }) {
+export default function Home() {
   const [activeMovies, setActiveMovies] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  const [movies, setMovies] = useState({
+    trending: [],
+    highestRated: [],
+    nowPlaying: [],
+    upcoming: [],
+    action: [],
+    comedy: [],
+  });
+
+  useEffect(() => {
+    async function fetchAllMovieData() {
+      try {
+        const today = new Date().toISOString().split("T")[0];
+
+        const endpoints = {
+          trending: `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`,
+          highestRated: `${API_BASE_URL}/discover/movie?sort_by=vote_average.desc&vote_count.gte=10000`,
+          upcoming: `${API_BASE_URL}/discover/movie?primary_release_date.gte=${today}&sort_by=popularity.desc`,
+          nowPlaying: `${API_BASE_URL}/movie/now_playing`,
+          action: `${API_BASE_URL}/discover/movie?with_genres=28`,
+          comedy: `${API_BASE_URL}/discover/movie?with_genres=35`,
+        };
+
+        const [
+          trendingRes,
+          highestRatedRes,
+          upcomingRes,
+          nowPlayingRes,
+          actionRes,
+          comedyRes,
+        ] = await Promise.all([
+          fetch(endpoints.trending, API_OPTIONS),
+          fetch(endpoints.highestRated, API_OPTIONS),
+          fetch(endpoints.upcoming, API_OPTIONS),
+          fetch(endpoints.nowPlaying, API_OPTIONS),
+          fetch(endpoints.action, API_OPTIONS),
+          fetch(endpoints.comedy, API_OPTIONS),
+        ]);
+
+        const responses = [
+          trendingRes,
+          highestRatedRes,
+          upcomingRes,
+          nowPlayingRes,
+          actionRes,
+          comedyRes,
+        ];
+
+        for (const res of responses) {
+          if (!res.ok) {
+            throw new Error(`Error fetching data: ${res.status}`);
+          }
+        }
+
+        const [
+          trendingData,
+          highestRatedData,
+          upcomingData,
+          nowPlayingData,
+          actionData,
+          comedyData,
+        ] = await Promise.all([
+          trendingRes.json(),
+          highestRatedRes.json(),
+          upcomingRes.json(),
+          nowPlayingRes.json(),
+          actionRes.json(),
+          comedyRes.json(),
+        ]);
+
+        setMovies({
+          trending: trendingData.results || [],
+          highestRated: highestRatedData.results || [],
+          upcoming: upcomingData.results || [],
+          nowPlaying: nowPlayingData.results || [],
+          action: actionData.results || [],
+          comedy: comedyData.results || [],
+        });
+      } catch (error) {
+        console.error(`Error fetching data: ${error}`);
+
+        setError("Could not load movies. Try again.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchAllMovieData();
+  }, []);
+  
   if (loading) {
     return <LoadingSpinner />;
   }
+
+  
+
   return (
     <>
       {activeMovies && (
