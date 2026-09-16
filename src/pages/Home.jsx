@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MoviePreview from "../components/movie/MoviePreview";
 import Search from "../components/Search";
-import LoadingSpinner from "../components/LoadingSpinner";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 import MovieRow from "../components/movie/MovieRow";
 import { API_BASE_URL, API_OPTIONS } from "../services/API_VARIABLES";
+import ErrorState from "../components/ui/Error";
 
 export default function Home() {
   const [activeMovies, setActiveMovies] = useState(null);
@@ -100,12 +101,14 @@ export default function Home() {
 
     fetchAllMovieData();
   }, []);
-  
+
   if (loading) {
     return <LoadingSpinner />;
   }
 
-  
+  if (error) {
+    return <ErrorState error={error} />;
+  }
 
   return (
     <>

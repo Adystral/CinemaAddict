@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { API_BASE_URL, API_OPTIONS } from "../services/API_VARIABLES";
 import { Link } from "react-router-dom";
-import InputItem from "./InputItem";
+import InputItem from "./ui/InputItem";
 
 export default function Search() {
   const [searchQuery, setSearchQuery] = useState("");
