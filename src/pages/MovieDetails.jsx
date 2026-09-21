@@ -40,7 +40,6 @@ export default function MovieDetails() {
   }
 
 
-
   // Trailer
   const trailer = movieDetails.videos?.results?.find(
     (vid) => vid.type === "Trailer" && vid.site === "YouTube",
