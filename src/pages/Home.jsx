@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MoviePreview from "../components/movie/MoviePreview";
-import Search from "../components/Search";
+import Search from "../components/search/Search";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import MovieRow from "../components/movie/MovieRow";
 import { API_BASE_URL, API_OPTIONS } from "../services/API_VARIABLES";

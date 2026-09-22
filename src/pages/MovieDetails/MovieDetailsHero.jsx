@@ -76,10 +76,6 @@ export default function MovieDetailsHero({ movieDetails, trailer, setIsTrailerOp
                 ▶ Play Trailer
               </button>
             )}
-            {/* <button className="bg-slate-700/80 hover:bg-slate-600 text-white px-6 py-3 rounded-lg font-bold transition-all border border-slate-600 cursor-pointer">
-                      + Add to Watchlist
-                    </button> */}
-            {/* WILL ADD THIS FEATURE LATER */}
           </div>
         </div>
       </div>

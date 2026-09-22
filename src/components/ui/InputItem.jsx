@@ -10,20 +10,23 @@ export default function InputItem({
   searchQuery,
   setSearchQuery,
   onFocus,
+  onEmptySearch,        
 }) {
   const navigate = useNavigate();
 
   const handleSearchSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (searchQuery && searchQuery.trim() !== "") {
       navigate(`/search?q=${searchQuery}`);
+    } else if (onEmptySearch) {
+      onEmptySearch();      
     }
   };
 
   return (
-    <form 
-      onSubmit={handleSearchSubmit} 
+    <form
+      onSubmit={handleSearchSubmit}
       className="flex flex-row items-center w-full justify-center"
     >
       <input
@@ -31,7 +34,7 @@ export default function InputItem({
         placeholder={placeholder}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        onFocus={onFocus} 
+        onFocus={onFocus}
         className={`${inputClassName} cinematic-input min-w-0`}
       />
 
@@ -39,7 +42,7 @@ export default function InputItem({
         <Button
           children={btnChildren}
           className={`${btnClassName} bg-[#1e293b]/50 border border-slate-700 text-slate-200 rounded-lg px-4 py-2 focus:outline-none focus:border-slate-400 font-mono text-base transition-colors duration-200 cursor-pointer`}
-          type="submit" 
+          type="submit"
         />
       </div>
     </form>

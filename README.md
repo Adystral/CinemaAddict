@@ -27,7 +27,7 @@ A movie discovery web app built with **React**, **Tailwind**, and the **TMDB API
 ## 🗺️ Roadmap / Future Enhancements
 
 ```text
-[ ] Firebase auth for a personalized, saved Watchlist.
+[ ] Login and Auth for a personalized, saved Watchlist.
 
 [ ] Genre filtering and sorting on a dedicated "Explore" page.
 

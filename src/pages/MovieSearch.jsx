@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import MovieCard from "../components/movie/MovieCard";
 import MoviePreview from "../components/movie/MoviePreview";
-import Search from "../components/Search";
+import Search from "../components/search/Search";
 import { API_BASE_URL, API_OPTIONS } from "../services/API_VARIABLES";
 
 export default function MovieSearch() {
